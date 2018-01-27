@@ -3,7 +3,8 @@
 -- Even if the lumps would be colored, that would still be inconvenient due
 -- to too many non-stacking nodes filling up the player's inventory.
 
-plasterwork.register_plaster_node = function( node_name, description, image, palette, price_node, price_amount )
+plasterwork.register_plaster_node = function( node_name, description, image, palette, price_node, price_amount,
+		randomly_from_source_block )
 	minetest.register_node( node_name, {
 		description = description,
 		tiles = {image},
@@ -18,15 +19,18 @@ plasterwork.register_plaster_node = function( node_name, description, image, pal
 		if( not( plasterwork.supported[ node_name ])) then
 			table.insert( plasterwork.node_list, node_name );
 		end
-		plasterwork.supported[ node_name ] = { price_node, price_amount };
+		plasterwork.supported[ node_name ] = { price_node, price_amount, randomly_from_source_block };
 	end
 end
 
 plasterwork.register_plaster_node( "plasterwork:rough_plaster", "Stone with clay plaster",
-	"default_clay.png", plasterwork.palette, "default:cobble", 2 );
+	"default_clay.png", plasterwork.palette, "default:cobble", 2, "default:copperblock" );
 
 plasterwork.register_plaster_node( "plasterwork:smooth_plaster", "Stone with smooth plaster",
-	"default_coral_skeleton.png", plasterwork.palette, "default:cobble", 4 );
+	"default_coral_skeleton.png", plasterwork.palette, "default:cobble", 4, "default:steelblock" );
 
 plasterwork.register_plaster_node( "plasterwork:tin_plaster", "Stone with metallic plaster",
-	"default_tin_block.png", plasterwork.palette, "default:cobble", 6 );
+	"default_tin_block.png", plasterwork.palette, "default:cobble", 6, "default:tinblock" );
+
+plasterwork.register_plaster_node( "plasterwork:sandstone_plaster", "Stone with sandstone plaster",
+	"default_sandstone.png", plasterwork.palette, "default:cobble", 6, "default:goldblock" );

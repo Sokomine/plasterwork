@@ -25,11 +25,25 @@ plasterwork.update_formspec = function(pos, meta, inv)
 
 	local node_below = minetest.get_node( {x=pos.x, y=pos.y-1, z=pos.z});
 	
-	-- exchange the node below with a random plastered one
-	if( can_pay and node_below and node_below.name and node_below.name == plasterwork.random_block) then
-		node_below.name = plasterwork.node_list[ math.random( 1, #plasterwork.node_list )];
-		node_below.param2 = math.random(0,255);
-		minetest.set_node( {x=pos.x, y=pos.y-1, z=pos.z}, node_below );
+	if( can_pay and node_below and node_below.name) then
+		local old_name = node_below.name;
+		-- exchange the node below with a random plastered one
+		if( node_below.name == plasterwork.random_block) then
+			node_below.name = plasterwork.node_list[ math.random( 1, #plasterwork.node_list )];
+		-- ..or with a specific one if it is the right type
+		else
+			for k,v in pairs( plasterwork.supported ) do
+				if( k and v and v[3] and v[3]==node_below.name ) then
+					node_below.name = k;
+				end
+			end
+
+		end
+		-- we found a new one
+		if( old_name ~= node_below.name ) then
+			node_below.param2 = math.random(0,255);
+			minetest.set_node( {x=pos.x, y=pos.y-1, z=pos.z}, node_below );
+		end
 	end
 
 	if( not( can_pay ) or not( node_below ) or not( node_below.name )

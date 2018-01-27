@@ -7,7 +7,7 @@ plasterwork.palette = "unifieddyes_palette_extended.png";
 
 -- this block will - when scanned - turn into a randomly plastered one;
 -- make sure that block has a description
-plasterwork.random_block = "default:copperblock";
+plasterwork.random_block = "default:bronzeblock";
 
 -- each scan (adjustment to new plaster and color type) costs that much:
 plasterwork.scan_price = "default:mese_crystal_fragment";
